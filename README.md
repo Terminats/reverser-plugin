@@ -1,6 +1,7 @@
 # RE Skills
 
-Repozytorium naszych skilli do reverse engineeringu. Obecnie obsługuje **Codexa**;
+Repozytorium naszych skilli do reverse engineeringu i pisania czytelnego kodu.
+Obecnie obsługuje **Codexa**;
 wspólne instrukcje są oddzielone od adaptera agenta.
 
 | Skill | Zastosowanie |
@@ -8,6 +9,7 @@ wspólne instrukcje są oddzielone od adaptera agenta.
 | [game-reverse-engineering-repo](skills/game-reverse-engineering-repo/SKILL.md) | Zakładanie i organizowanie repozytoriów RE gier |
 | [ghidra-re-investigation](skills/ghidra-re-investigation/SKILL.md) | Badanie binariów i dokumentowanie potwierdzonych ustaleń w Ghidrze |
 | [binary-patch-engineering](skills/binary-patch-engineering/SKILL.md) | Odwracalne patche, eksperymenty, walidacja i pakowanie |
+| [readable-code](skills/readable-code/SKILL.md) | Formatowanie, granice modułów, reużycie i bezpieczna refaktoryzacja |
 
 ## Przygotowanie i budowanie
 

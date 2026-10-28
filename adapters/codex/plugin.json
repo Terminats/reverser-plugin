@@ -8,7 +8,8 @@
         "defaultPrompt": [
           "Use $game-reverse-engineering-repo to create a repository for reverse engineering this game.",
           "Use $ghidra-re-investigation to investigate this binary behavior and document confirmed findings in Ghidra.",
-          "Use $binary-patch-engineering to turn these findings into a guarded, reversible patch."
+          "Use $binary-patch-engineering to turn these findings into a guarded, reversible patch.",
+          "Use $readable-code to improve formatting, module boundaries, and reuse while preserving behavior."
         ]
       }
     }

@@ -7,6 +7,8 @@ import tempfile
 import unittest
 from unittest.mock import patch
 
+import yaml
+
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
 
@@ -58,6 +60,16 @@ class PackagingTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "already exists"):
             build_package(self.root, "codex")
         self.assertEqual(sentinel.read_text(encoding="utf-8"), "previous build")
+
+    def test_optional_prompt_is_checked_when_provided(self):
+        path = self.root / "adapters/codex/skills/readable-code/openai.yaml"
+        metadata = yaml.safe_load(path.read_text(encoding="utf-8"))
+        for prompt in ("", 123, "Use $another-skill"):
+            with self.subTest(prompt=prompt):
+                metadata["interface"]["default_prompt"] = prompt
+                path.write_text(yaml.safe_dump(metadata), encoding="utf-8")
+                with self.assertRaisesRegex(ValueError, "Codex prompt must reference"):
+                    validate_repository(self.root)
 
     def test_explicit_replace_removes_stale_output(self):
         destination = build_package(self.root, "codex")

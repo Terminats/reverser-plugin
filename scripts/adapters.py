@@ -27,11 +27,13 @@ class CodexAdapter:
             if not isinstance(metadata, dict) or not isinstance(metadata.get("interface"), dict):
                 raise ValueError(f"Invalid Codex metadata: {skill}")
             interface = metadata["interface"]
-            for field in ("display_name", "short_description", "default_prompt"):
+            for field in ("display_name", "short_description"):
                 if not isinstance(interface.get(field), str) or not interface[field].strip():
                     raise ValueError(f"Missing {field} in Codex metadata: {skill}")
-            if f"${skill}" not in interface["default_prompt"]:
-                raise ValueError(f"Codex prompt must reference ${skill}")
+            if "default_prompt" in interface:
+                prompt = interface["default_prompt"]
+                if not isinstance(prompt, str) or f"${skill}" not in prompt:
+                    raise ValueError(f"Codex prompt must reference ${skill}")
 
     def build(self, root: Path, catalog: dict, destination: Path) -> None:
         plugin = destination / catalog["name"]

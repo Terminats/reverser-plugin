@@ -1,0 +1,3 @@
+interface:
+  display_name: "Czytelny kod"
+  short_description: "Czytelne formatowanie, podział modułów i reużycie"

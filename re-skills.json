@@ -1,0 +1,11 @@
+{
+  "format_version": 1,
+  "name": "re-skills",
+  "version": "0.1.0",
+  "description": "Evidence-led reverse engineering, Ghidra investigation, and reversible binary patch engineering.",
+  "skills": [
+    "game-reverse-engineering-repo",
+    "ghidra-re-investigation",
+    "binary-patch-engineering"
+  ]
+}

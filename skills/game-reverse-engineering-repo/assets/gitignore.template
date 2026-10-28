@@ -1,0 +1,47 @@
+# Local inputs, analysis databases, builds, and generated output
+/work/*
+!/work/README.md
+/output/*
+!/output/README.md
+/config/local.settings.json
+/config/*.local.json
+
+# Generated package payloads
+/patches/**/files/
+
+# Native game binaries and working copies
+*.exe
+*.dll
+*.so
+*.dylib
+
+# Local gameplay state and crash material
+*.sav
+*.dmp
+*.mdmp
+core.dump
+
+# Ghidra and other local analysis databases
+*.gpr
+*.rep/
+.ghidra/
+*.idb
+*.i64
+
+# Local build/IDE caches
+.vs/
+.vscode/
+__pycache__/
+*.pyc
+*.user
+Thumbs.db
+Desktop.ini
+.DS_Store
+
+# Logs, temporary files, and backups
+*.log
+*.tmp
+*.bak
+
+# Add the target game's observed asset/save extensions or exact paths here.
+# Keep any intentional source/configuration exceptions narrow and explicit.

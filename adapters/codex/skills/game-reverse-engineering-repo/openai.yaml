@@ -1,0 +1,4 @@
+interface:
+  display_name: "Game RE Repository"
+  short_description: "Create repositories for game reverse engineering"
+  default_prompt: "Use $game-reverse-engineering-repo to create a game reverse-engineering repository with modular architecture adapted to the target game and requested scope."

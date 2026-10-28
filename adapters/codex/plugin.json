@@ -1,0 +1,16 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "extensions": {
+    "com.openai": {
+      "interface": {
+        "displayName": "RE Skills",
+        "shortDescription": "Evidence-led reverse engineering and reversible patches",
+        "defaultPrompt": [
+          "Use $game-reverse-engineering-repo to create a repository for reverse engineering this game.",
+          "Use $ghidra-re-investigation to investigate this binary behavior and document confirmed findings in Ghidra.",
+          "Use $binary-patch-engineering to turn these findings into a guarded, reversible patch."
+        ]
+      }
+    }
+  }
+}

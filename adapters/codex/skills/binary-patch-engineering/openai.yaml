@@ -1,0 +1,4 @@
+interface:
+  display_name: "Binary Patch Engineering"
+  short_description: "Guarded native patch design and delivery"
+  default_prompt: "Use $binary-patch-engineering to turn these confirmed reverse-engineering findings into a reversible guarded patch."

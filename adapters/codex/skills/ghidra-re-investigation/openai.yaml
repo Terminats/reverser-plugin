@@ -1,0 +1,4 @@
+interface:
+  display_name: "Ghidra RE Investigation"
+  short_description: "Evidence-led Ghidra analysis and naming"
+  default_prompt: "Use $ghidra-re-investigation to investigate this binary behavior and keep confirmed findings documented in Ghidra."

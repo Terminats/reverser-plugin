@@ -1,27 +1,29 @@
-# Import aktualnych skilli
+# Skill import
 
-Stan początkowy skopiowano 2026-10-28 z lokalnego katalogu `~/.codex/skills/`:
+The initial content was copied on 2026-10-28 from the local `~/.codex/skills/`
+directory:
 
 - `game-reverse-engineering-repo`
 - `ghidra-re-investigation`
 - `binary-patch-engineering`
-- `readable-code` — dodany po uzupełnieniu zakresu o zasady pisania kodu,
-  formatowania i refaktoryzacji
+- `readable-code` - added when the scope was extended to include code formatting
+  and refactoring guidance
 
-Podczas importu zachowano treść `SKILL.md`, wszystkie referencje i szablony. Oryginalne
-`agents/openai.yaml` przeniesiono bez zmian do
-`adapters/codex/skills/<skill-id>/openai.yaml`; build umieszcza je ponownie
-w `skills/<skill-id>/agents/openai.yaml` w wynikowym pluginie.
+The import preserved `SKILL.md` content, references, and templates. Original
+`agents/openai.yaml` files were moved unchanged to
+`adapters/codex/skills/<skill-id>/openai.yaml`; the build places them back under
+`skills/<skill-id>/agents/openai.yaml` in the output plugin.
 
-Po review skrócono `readable-code`, zachowując preferencje formatowania i ogólne
-zasady refaktoryzacji. Usunięto szczegóły dotyczące runtime'ów, diagnostyki oraz
-konkretnych mechanizmów testowania. Metadane OpenAI pozostały bez zmian.
+After review, `readable-code` was shortened while retaining formatting preferences
+and general refactoring guidance. Details about runtimes, diagnostics, and specific
+testing mechanisms were removed. Its OpenAI metadata was initially preserved, then
+translated into English when the repository adopted English throughout.
 
-Import obejmuje trzy skille RE i wspólny skill `readable-code`. Nie obejmuje skilli
-do zarządzania skillami ani integracji z innymi usługami.
-Odwołania między skillami RE zachowują dotychczasowe identyfikatory.
+The import includes three RE skills and the shared `readable-code` skill. It does
+not include skill-management workflows or integrations with other services.
+Cross-references between RE skills retain their existing identifiers.
 
-Od tej chwili źródłem zmian dla tego pakietu jest repozytorium. Zmiany w globalnie
-zainstalowanych skillach nie synchronizują się automatycznie. Aktualizacje z tych
-kopii należy porównać, przenieść wraz z zasobami i zweryfikować. Zastępowanie
-istniejących globalnych instalacji nie jest częścią budowania pluginu.
+The repository is now the source of changes for this package. Globally installed
+copies do not synchronize automatically. Updates from those copies should be
+compared, transferred with their resources, and validated. Replacing existing
+global installations is not part of building the plugin.

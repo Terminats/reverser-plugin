@@ -1,20 +1,19 @@
 # RE Skills
 
-Repozytorium naszych skilli do reverse engineeringu i pisania czytelnego kodu.
-Obecnie obsługuje **Codexa**;
-wspólne instrukcje są oddzielone od adaptera agenta.
+Our skills for reverse engineering and writing readable code. Currently supports
+**Codex**, with shared instructions kept separate from the agent adapter.
 
-| Skill | Zastosowanie |
+| Skill | Purpose |
 | --- | --- |
-| [game-reverse-engineering-repo](skills/game-reverse-engineering-repo/SKILL.md) | Zakładanie i organizowanie repozytoriów RE gier |
-| [ghidra-re-investigation](skills/ghidra-re-investigation/SKILL.md) | Badanie binariów i dokumentowanie potwierdzonych ustaleń w Ghidrze |
-| [binary-patch-engineering](skills/binary-patch-engineering/SKILL.md) | Odwracalne patche, eksperymenty, walidacja i pakowanie |
-| [readable-code](skills/readable-code/SKILL.md) | Formatowanie, granice modułów, reużycie i bezpieczna refaktoryzacja |
+| [game-reverse-engineering-repo](skills/game-reverse-engineering-repo/SKILL.md) | Create and organize game reverse-engineering repositories |
+| [ghidra-re-investigation](skills/ghidra-re-investigation/SKILL.md) | Investigate binaries and document confirmed findings in Ghidra |
+| [binary-patch-engineering](skills/binary-patch-engineering/SKILL.md) | Reversible patches, experiments, validation, and packaging |
+| [readable-code](skills/readable-code/SKILL.md) | Formatting, module boundaries, reuse, and safe refactoring |
 
-## Przygotowanie i budowanie
+## Setup and build
 
-Wymagania: Python 3.11+ i Git. Narzędzia działają z dowolnego katalogu roboczego;
-poniższe polecenia zakładają uruchomienie w katalogu repozytorium.
+Requirements: Python 3.11+ and Git. Tools work from any working directory; the
+following commands assume you are at the repository root.
 
 ```powershell
 python -m venv .venv
@@ -24,57 +23,56 @@ python -m venv .venv
 .venv/Scripts/python scripts/re_skills.py build --agent codex
 ```
 
-Na Linux/macOS użyj `.venv/bin/python` zamiast `.venv/Scripts/python`.
+On Linux/macOS, use `.venv/bin/python` instead of `.venv/Scripts/python`.
 
-Powstaje `dist/codex/`: plugin `re-skills/` z manifestem `plugin.json`, kompletem
-skilli i metadanymi OpenAI oraz lokalny katalog pluginów
-`.agents/plugins/marketplace.json`. Kolejny build wymaga usunięcia poprzedniego
-wyniku albo jawnego `build --agent codex --replace`; zastępowanie dotyczy wyłącznie
-katalogu tego adaptera w `dist/`.
+The build creates `dist/codex/`, containing the `re-skills/` plugin with its
+`plugin.json` manifest, complete skills, and OpenAI metadata, plus a local plugin
+catalog at `.agents/plugins/marketplace.json`. To rebuild, remove the previous
+output or explicitly run `build --agent codex --replace`. Replacement affects only
+that adapter's directory under `dist/`.
 
-## Użycie w Codexie
+## Use with Codex
 
-Po zbudowaniu dodaj wygenerowany marketplace:
+After building, add the generated marketplace:
 
 ```powershell
 codex plugin marketplace add ./dist/codex
 ```
 
-Uruchom ponownie aplikację desktopową, wybierz źródło **re-skills-local** w katalogu
-pluginów i zainstaluj **RE Skills**. Rozpocznij nowy czat. Po zmianach w źródłach
-przebuduj pakiet, odśwież marketplace i instalację pluginu, a następnie rozpocznij
-nowy czat. Aplikacja ładuje zainstalowaną kopię, więc samo edytowanie repozytorium
-nie aktualizuje aktywnego skilla.
+Restart the desktop app, select **re-skills-local** in the plugin directory, and
+install **RE Skills**. Start a new chat. After source changes, rebuild the package,
+refresh the marketplace and plugin installation, and start a new chat. The app
+loads the installed copy, so editing the repository alone does not update an
+active skill.
 
-Format pakietu i sposób rejestrowania lokalnego marketplace są opisane w
-[oficjalnej dokumentacji OpenAI](https://developers.openai.com/plugins/build/plugins).
-Build przygotowuje pliki; nie instaluje pluginu ani nie zmienia konfiguracji agenta.
+The package format and local marketplace registration are described in the
+[official OpenAI documentation](https://developers.openai.com/plugins/build/plugins).
+Building prepares files; it does not install the plugin or change agent settings.
 
-Przykładowe wywołanie po instalacji:
+Example invocation after installation:
 
 ```text
-Użyj $ghidra-re-investigation, żeby zbadać przyczynę tego zachowania binarki
-i zapisać potwierdzone nazwy, typy oraz komentarze w projekcie Ghidry.
+Use $ghidra-re-investigation to investigate the cause of this binary behavior
+and record confirmed names, types, and comments in the Ghidra project.
 ```
 
-Skill Ghidry wymaga osobno działającej Ghidry i zgodnego serwera MCP udostępniającego
-odkrywanie instancji, wybór programu, analizę oraz zapis dokumentacji. Pakiet zawiera
-instrukcje, nie serwer MCP. Nie dostarcza gotowego adresu ani konfiguracji połączenia;
-są one lokalne dla konkretnego projektu.
+The Ghidra skill requires a separate Ghidra installation and a compatible MCP
+server providing instance discovery, program selection, analysis, and documentation
+updates. This package contains instructions, not an MCP server. Connection addresses
+and settings belong to the target project's local configuration.
 
-## Rozwój
+## Development
 
-- `skills/` — pojedyncze źródło instrukcji, referencji i szablonów.
-- `adapters/codex/` — manifest pakietu i metadane UI dla Codexa.
-- `re-skills.json` — tożsamość, wersja i lista publikowanych skilli.
-- `scripts/` — wspólna walidacja, składanie i rejestr adapterów.
-- `tests/` — testy pakowania, zachowania zasobów i ochrony źródeł.
-- `dist/` — ignorowane wyniki budowania.
+- `skills/` - single source of instructions, references, and templates.
+- `adapters/codex/` - package manifest and Codex UI metadata.
+- `re-skills.json` - package identity, version, and published skill list.
+- `scripts/` - shared validation, assembly, and adapter registry.
+- `tests/` - packaging, resource preservation, and source protection tests.
+- `dist/` - ignored build output.
 
-Kontrakt adapterów i procedura dodania kolejnego agenta:
-[architektura](docs/architecture.md). Pochodzenie aktualnej zawartości:
-[import skilli](docs/import.md).
+All repository documentation, skill instructions, templates, code comments, and
+user-facing metadata use English.
 
-Repozytorium jest przygotowane lokalnie. Publikacja do zdalnego repozytorium i
-wybór licencji pozostają odrębnymi decyzjami; pakiet nie deklaruje wymyślonej
-licencji ani adresu zdalnego repozytorium.
+See [architecture](docs/architecture.md) for the adapter contract and how to add
+another agent. See [skill import](docs/import.md) for the origin of the current
+content.

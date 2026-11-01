@@ -1,61 +1,61 @@
-# Wspólne skille i adaptery agentów
+# Shared skills and agent adapters
 
-## Granice
+## Boundaries
 
-`skills/<id>/` zawiera workflow i jego zasoby. Instrukcje opisują pracę z dowodami,
-stanem projektu i odwracalnymi zmianami. Ich identyfikatory nie zależą od nazwy
-agenta. Każdy pakiet otrzymuje pełne drzewo referencji i szablonów; build nie
-spłaszcza ścieżek ani nie podmienia instrukcji ukrytymi zamianami tekstu.
+`skills/<id>/` contains a workflow and its resources. Instructions cover evidence,
+project state, and reversible changes. Skill IDs do not depend on the agent name.
+Each package receives the complete reference and template tree; the build does not
+flatten paths or silently rewrite instructions.
 
-`re-skills.json` określa wersję formatu katalogu, tożsamość pakietu, wersję wydania
-i kolejność skilli. `scripts/re_skills.py` waliduje katalog, YAML i lokalne linki.
-Obecny format to `1`; nieznane wersje są odrzucane.
+`re-skills.json` defines the catalog format version, package identity, release
+version, and skill order. `scripts/re_skills.py` validates the catalog, YAML, and
+local links. The current format is 1; unknown versions are rejected.
 
-Adapter implementuje `validate(root, catalog)` oraz
-`build(root, catalog, destination)` w `scripts/adapters.py` i ma jawny wpis
-w `ADAPTERS`. Wspólny builder wywołuje adapter po walidacji, a wynik tworzy najpierw
-w katalogu tymczasowym. Publikacja polega na zmianie nazwy gotowego katalogu.
-Przy `--replace` poprzedni wynik jest zachowany do zakończenia publikacji.
-Nieznany agent kończy się błędem przed utworzeniem wyniku.
+An adapter implements `validate(root, catalog)` and
+`build(root, catalog, destination)` in `scripts/adapters.py` and has an explicit
+entry in `ADAPTERS`. The shared builder calls the adapter after validation and
+assembles output in a temporary directory first. Publication renames the completed
+directory. With `--replace`, the previous output is preserved until publication
+completes. An unknown agent fails before creating output.
 
-Kod adaptera oraz jego pliki konfiguracyjne są specyficzne dla hosta. Przykład
-Codexa: prezentacja pluginu w `adapters/codex/plugin.json`, a metadane skilli
-w `adapters/codex/skills/<id>/openai.yaml`. Wynik zawiera przenośny manifest
-Agent Plugins z rozszerzeniem `com.openai` i katalog skilli. Tożsamość oraz wersja
-są pobierane z katalogu, nie utrzymywane w drugiej kopii manifestu.
+Adapter code and configuration are host-specific. For Codex, plugin presentation
+is in `adapters/codex/plugin.json`, and skill metadata is in
+`adapters/codex/skills/<id>/openai.yaml`. Output contains a portable Agent Plugins
+manifest with the `com.openai` extension and a skills directory. Identity and
+version come from the catalog rather than a second maintained manifest copy.
 
-## Obecna granica przenośności
+## Current portability boundary
 
-Tylko adapter Codexa jest zaimplementowany. Przenośny manifest nie oznacza
-zweryfikowanego wsparcia innych hostów.
+Only the Codex adapter is implemented. A portable manifest does not establish
+verified support for other hosts.
 
-Referencja `ghidra-re-investigation/references/mcp-connection.md` zachowuje
-dotychczasowe nazwy `mcp__ghidra__list_instances` i
-`mcp__ghidra__connect_instance`. To powiązanie z aktualną integracją, którego nie
-ukrywamy przez samo rozdzielenie katalogów. Wymagane możliwości to:
+The `ghidra-re-investigation/references/mcp-connection.md` reference retains the
+existing names `mcp__ghidra__list_instances` and
+`mcp__ghidra__connect_instance`. This dependency on the current integration remains
+explicit even though directories are separated. Required capabilities are:
 
-| Możliwość | Wymagane zachowanie |
+| Capability | Required behavior |
 | --- | --- |
-| Odkrywanie instancji | Rozpoznanie projektu i aktywnego programu |
-| Połączenie | Jawny wybór instancji oraz potwierdzenie tożsamości celu |
-| Analiza | Funkcje, dekompilacja, xrefy i dane |
-| Dokumentacja | Nazwy, typy, sygnatury i komentarze |
-| Weryfikacja | Odczyt każdej mutacji z tego samego programu |
+| Instance discovery | Identify the project and active program |
+| Connection | Explicitly select an instance and confirm target identity |
+| Analysis | Functions, decompilation, cross-references, and data |
+| Documentation | Names, types, signatures, and comments |
+| Verification | Read back each mutation from the same program |
 
-Serwer i dane połączenia należą do środowiska użytkownika. Nie pakujemy
-przykładowego, niezweryfikowanego endpointu ani projektu Ghidry.
+The server and connection settings belong to the user's environment. The package
+does not include an unverified example endpoint or a Ghidra project.
 
-## Dodanie kolejnego agenta
+## Adding another agent
 
-1. Sprawdź jego rzeczywisty format skilli, sposób odkrywania i integrację MCP.
-2. Dodaj dane hosta pod `adapters/<agent>/`, implementację adaptera i jawny wpis
-   w rejestrze. Nie twórz oddzielnej utrzymywanej kopii wspólnych skilli.
-3. Jeżeli nazwy narzędzi Ghidry są inne, wydziel wspólny kontrakt połączenia
-   i dodaj referencję adaptera. Zaktualizuj linki jawnie i przetestuj wynik.
-   Nie zastępuj globalnie ciągów `Codex` ani nazw narzędzi.
-4. Złóż kompletny pakiet z jego metadanymi, wszystkimi referencjami i szablonami.
-5. Dodaj testy pakowania oraz sprawdź wykrywanie skilli i workflow z MCP
-   w rzeczywistym hoście. Dopiero wtedy opisz tego agenta jako wspieranego.
+1. Check its actual skill format, discovery mechanism, and MCP integration.
+2. Add host data under `adapters/<agent>/`, an adapter implementation, and an
+   explicit registry entry. Do not maintain a separate copy of shared skills.
+3. If Ghidra tool names differ, extract a shared connection contract and add an
+   adapter reference. Update links explicitly and test the result. Do not apply
+   global replacements to Codex or tool names.
+4. Assemble a complete package with its metadata, references, and templates.
+5. Add packaging tests and check skill discovery and the MCP workflow in the actual
+   host. Only then describe that agent as supported.
 
-Build nie łączy się z Ghidrą i nie dowodzi poprawności narzędzi MCP ani zachowania
-patchy w grze. Te rzeczy wymagają osobnego, konkretnego celu i środowiska.
+The build does not connect to Ghidra or establish that MCP operations or in-game
+patch behavior work. Those checks require a specific target and environment.

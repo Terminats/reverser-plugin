@@ -15,5 +15,5 @@ repository; do not scaffold a native runtime or import game binaries here.
 - Run `.venv/Scripts/python scripts/re_skills.py validate` and
   `.venv/Scripts/python -m unittest discover -s tests -v` on Windows; use
   `.venv/bin/python` elsewhere. Build the Codex package after changing packaging.
-- Write repository documentation in Polish and retain the existing language of
-  imported skills unless the task asks for translation.
+- Use English for all repository documentation, skill instructions, templates,
+  code comments, and user-facing metadata. Translate imported content as needed.
